@@ -1,0 +1,11 @@
+---
+  - include: SetHostName.yml
+  - include: YumRepos.yml
+  - include: MountPoints.yml
+  - include: Http.yml
+  - include: Lvm.yml
+  - include: LocalRepos.yml
+  - include: SymbolicLinks.yml
+  - include: Dhcp.yml
+  - include: Tftp.yml
+  - include: KickStart.yml

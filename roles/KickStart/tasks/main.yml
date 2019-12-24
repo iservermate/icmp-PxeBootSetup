@@ -1,0 +1,5 @@
+---
+# tasks file for KickStart
+  - import_tasks: KickStartFile.yml
+    tags:
+      - Enable kickstart

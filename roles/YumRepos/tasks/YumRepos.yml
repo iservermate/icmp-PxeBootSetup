@@ -1,0 +1,74 @@
+---
+  - name: "Creating Repo directory"
+    file:
+      path: "{{ YumRepoDir }}"
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
+
+  - name: "Finding repositories files under /etc/yum.repos.d to remove"
+    find:
+      paths: "/etc/yum.repos.d/"
+      recurse: true
+    register: ListOfFiles
+
+  - name: "removing files"
+    file:
+      path: "{{ item.path }}"
+      state: absent
+    with_items:
+      - "{{ ListOfFiles.files }}"
+
+  - name: "Copying CENTOS template file on remote server"
+    template:
+      src: CentosLocalRepo.repo.j2
+      dest: /etc/yum.repos.d/CentosLocalRepo.repo
+      owner: root
+      group: root
+      mode: 0644
+#    when: "'pxeserver' not in inventory_hostname"
+    when: ansible_hostname != "pxeserver" and ansible_distribution == "CentOS"
+
+  - name: "Copying RHEL template file"
+    template:
+      src: RhelLocalRepo.repo.j2
+      dest: /etc/yum.repos.d/RhelLocalRepo.repo
+      owner: root
+      group: root
+      mode: 0644
+    notify: restart apache
+    when:
+#    when: "'pxeserver' not in inventory_hostname"
+    when: ansible_hostname != "pxeserver" and ansible_distribution == "RedHat"
+
+  - name: "Copying Rhel DVD template file on pxeserver"
+    template:
+      src:  RhelDvd.repo.j2
+      dest: /etc/yum.repos.d/RhelDvd.repo
+      owner: root
+      group: root
+      mode: 0644
+    when: "'pxeserver' is in inventory_hostname"
+
+  - name: "Copying Centos DVD template file on pxeserver"
+    template:
+      src:  CentosDvd.repo.j2
+      dest: /etc/yum.repos.d/CentosDvd.repo
+      owner: root
+      group: root
+      mode: 0644
+    when: "'pxeserver' is in inventory_hostname"
+
+  - name: "Copying MyPackages repo template file on server"
+    template:
+      src:  MyPackages.repo.j2
+      dest: /etc/yum.repos.d/MyPackages.repo
+      owner: root
+      group: root
+      mode: 0644
+
+  - name: yum-clean-metadata
+    command: yum clean metadata
+    args:
+      warn: no

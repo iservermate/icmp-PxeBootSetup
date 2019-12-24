@@ -1,0 +1,29 @@
+---
+#The role is only for PXEBOOT Server
+  - name: "Create and enable Kickstart"
+    hosts: all
+    become: yes
+    gather_facts: on
+    vars_prompt:
+      - name: PxeServerName
+        protmpt: "Enter fqdn pxeboot server name: "
+        private: no
+
+      - name: PxeOS
+        prompt: "Set kickstart file for OS (rhel, centos, ubuntu): "
+        private: no
+        default: rhel
+    
+      - name: NameServer
+        prompt: "Enter DNS Ip: "
+        private: no
+
+      - name: RootPassword
+        promtp: "Enter root password for kickstart file: "
+        unsafe: yes
+        private: yes
+        encrypt: "sha512_crypt"
+        confirm: yes
+        salt_size: 7
+    roles:
+      - KickStart

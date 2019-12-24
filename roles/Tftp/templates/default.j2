@@ -1,0 +1,23 @@
+DEFAULT menu
+PROMPT 0
+TIMEOUT 200
+ONTIMEOUT local
+menu title ################### Install OS Using PXE BOOT #####################
+LABEL 1
+MENU label ^1) RHEL 7 using pxe boot
+kernel /rhel7/vmlinuz
+append initrd=/rhel7/initrd.img method http://{{ TftHostname }}/{{ TftRhelOsPath }} devfs=nomount ks=http://{{ TftKickstart }}
+
+LABEL 2
+MENU label ^2) CENTOS 7 using pxe boot
+kernel /centos7/vmlinuz
+append initrd=/centos7/initrd.img method http://{{ TftHostname }}/{{ TftCentOsPath }} devfs=nomount ks=http://{{ TftKickstart }}
+
+LABEL 3
+MENU label ^3) Ubuntu 19 using pxe boot
+kernel /ubuntu/vmlinuz
+append initrd=/ubuntu/initrd.gz method http://{{ TftHostname }}/{{ TftUbuntuOsPath }} devfs=nomount url=http://{{ TftHostnameUbuntuSeed }}
+
+LABEL 4
+MENU LABEL ^4) Boot local hard drive
+        LOCALBOOT 0x80

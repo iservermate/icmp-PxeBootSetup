@@ -1,0 +1,43 @@
+---
+# defaults file for KickStart
+#This server name will come from Prompt.
+fqdn: "{{ PxeServerName }}"
+
+#Packages to install.
+# - system-config-kickstart 
+
+#set root password
+RootPass: "{{ RootPassword }}"    # Create another role "encrypt pass" and befor executing main role execut this role with --tag.
+#Timezone
+Timezone: America/Toronto
+
+#Enable OS line as per requirement
+KickUrl: "{{ fqdn }}/os/{{ PxeOS }}"
+#rhel: "{{ fqdn }}/os/rhel"
+#ubuntu: "{{ fqdn }}/os/ubuntu"
+
+#This will comep from prompt
+KickNameServer: "{{ NameServer }}"
+
+#LVM Variables
+
+LvmFileSystem: xfs
+FileSystem: xfs
+VolumeGroup: vgmatevg
+VgSize: 4096
+SwapSize: 1024
+SwapLvName: swap_lv
+VarSize: 2048
+VarLvName: var_lv
+VarTmpSize: 1024
+VarTmpLvName: var_tmp_lv
+VarLogSize: 2048
+VarLogLvName: var_log_lv
+VarLogAuditSize: 1024
+VarLogAuditLvName: var_log_audit_lv
+HomeSize: 2048
+HomeLvName: home_lv
+RootSize: 4096
+RootLvName: root_lv
+ToolsSzie: 1024
+ToolsLvName: tools

@@ -1,0 +1,13 @@
+---
+  - name: "Creating kickstart directory"
+    file:
+      path: /var/www/html/kickstart
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
+  - name: "Copy template file"
+    template:
+      src: rhel7.cfg.j2
+      dest: /var/www/html/kickstart/rhel7.cfg
+    notify: "Restart apache"

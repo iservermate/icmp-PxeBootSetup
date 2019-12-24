@@ -1,0 +1,8 @@
+---
+# handlers file for Dhcp
+  - name: Restart dnsmasq
+    service: name=dnsmasq state=restarted enabled=yes
+    listen: "Restart dnsmasq service"
+  - name: Restart Firewall
+    service: name=firewalld state=reloaded enabled=yes
+    listen: "Reload firewalld service"

@@ -1,0 +1,13 @@
+---
+# defaults file for Tftp
+TftPackages:
+ - xinetd
+ - tftp-server
+ - syslinux
+#Variables for /var/lib/tftp/pxelinux.cfg/defautl Default  file variables for PXE Boot
+TftHostname: "{{ inventory_hostname }}"
+TftKickstart: "{{ inventory_hostname }}/kickstart/rhel7.cfg"
+TftHostnameUbuntuSeed: "{{ inventory_hostname }}/kickstart/local-sources.seed vga=788 --- quiet"
+TftRhelOsPath: "os/rhel"
+TftCentOsPath: "os/centos"
+TftUbuntuOsPath: "os/ubuntu/install"

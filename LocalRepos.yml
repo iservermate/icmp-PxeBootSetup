@@ -1,0 +1,8 @@
+---
+#The role is only for PXEBOOT Server
+  - name: "Enalble Local yum RHEL/CENTOS repos only for PXEBOOT Server"
+    hosts: all
+    become: yes
+    gather_facts: off
+    roles:
+      - LocalRepos

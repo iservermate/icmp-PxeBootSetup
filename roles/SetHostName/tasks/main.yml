@@ -1,0 +1,5 @@
+---
+# tasks file for SetHostName
+  - import_tasks: SetHostName.yml
+    tags:
+      - set hostname

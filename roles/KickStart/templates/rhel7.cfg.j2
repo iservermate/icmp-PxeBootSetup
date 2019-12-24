@@ -1,0 +1,58 @@
+#platform=x86, AMD64, or Intel EM64T
+#version=DEVEL
+# Install OS instead of upgrade
+install
+# Keyboard layouts
+keyboard 'us'
+# Halt after installation
+reboot
+# Root password
+rootpw --iscrypted "{{ RootPass }}"
+# System timezone
+timezone {{ Timezone }} --isUtc
+# Use network installation
+#url --url="http://icmplxapp-pxe-01.iservermate.local/os/rhel"
+url --url="{{ KickUrl }}"
+#url --url="http://icmplxapp-pxe-01.iservermate.local/os/ubuntu"
+# System language
+lang en_US
+# Firewall configuration
+firewall --enabled --ssh --service=ssh
+# Network information
+network  --bootproto=dhcp --device=eth0 --nameserver={{ KickNameServer }} --onboot=off --noipv6
+# System authorization information
+auth  --useshadow  --passalgo=sha512
+# Use text mode install
+text
+# SELinux configuration
+selinux --disabled
+# Do not configure the X Window System
+skipx
+# System bootloader configuration
+bootloader --location=mbr
+# Clear the Master Boot Record
+zerombr
+# Partition clearing information
+clearpart --all --initlabel
+#LVM settings
+part /boot --fstype="{{ LvmFileSystem }}" --ondisk=sda --size=500
+part pv.01 --fstype="lvmpv" --ondisk=sda --size=1 --grow
+volgroup {{ VolumeGroup }} --pesize="{{ VgSize }}" pv.01
+logvol swap --fstype="swap" --size={{ SwapSize }} --name={{ SwapLvName }} --vgname={{ VolumeGroup }}
+logvol /var --fstype="{{ FileSystem }}" --size={{ VarSize }} --name={{ VarLvName }} --vgname={{ VolumeGroup }}
+logvol /var/tmp --fstype="{{ FileSystem }}" --size={{ VarTmpSize }} --name={{ VarTmpLvName }} --vgname={{ VolumeGroup }}
+logvol /var/log --fstype="{{ FileSystem }}" --size={{ VarLogSize }} --name={{ VarLogLvName }} --vgname={{ VolumeGroup }}
+logvol /var/log/audit --fstype="{{ FileSystem }}" --size={{ VarLogAuditSize }} --name={{ VarLogAuditLvName }} --vgname={{ VolumeGroup }}
+logvol /home --fstype="{{ FileSystem }}" --size={{ HomeSize }} --name={{ HomeLvName }} --vgname={{ VolumeGroup }}
+logvol / --fstype="{{ FileSystem }}" --size={{ RootSize }} --name={{ RootLvName }} --vgname={{ VolumeGroup }}
+logvol /apps --fstype="{{ FileSystem }}" --size={{ ToolsSzie }} --name={{ ToolsLvName }} --vgname={{ VolumeGroup }}
+
+
+%packages
+@core --nodefaults
+%end
+
+%post
+/sbin/ip a s
+%end
+

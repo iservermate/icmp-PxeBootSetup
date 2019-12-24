@@ -1,0 +1,6 @@
+---
+# defaults file for YumRepo
+
+YumRepoDir: /var/www/html/repo
+#PxeServerIP: "{{ inventory_hostname }}"
+PxeServerIP: "{{ MyPxeServerIP }}"

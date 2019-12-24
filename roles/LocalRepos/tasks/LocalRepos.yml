@@ -1,0 +1,34 @@
+---
+#This roles is only for Pxeboot server
+  - name: "Create /var/www/html/repo directory"
+    file: 
+      path: /var/www/html/repo
+      state: directory
+      owner: root
+      group: root
+      mode: 0755
+  - name: restart apache
+    service: name=httpd state=restarted enabled=yes
+  - name: "Install createrepo package"
+    yum:
+      name: createrepo
+      state: present
+  - name: "Synchornizing Centos remote repo to local directory"
+    shell: |
+      reposync -l -r centos -p "{{ YumRepoDir }}" --download-metadata --downloadcomps
+    notify: restart apache
+
+  - name: "Creating repository information for centos synchronized packages"
+    shell: |
+      createrepo -v "{{ YumRepoDir }}"centos/ -g comps.xml
+    notify: restart apache
+
+  - name: "Synchornizing Rhel remote repo to local directory"
+    shell: |
+      reposync -l -r rhel -p "{{ YumRepoDir }}" --download-metadata --downloadcomps
+    notify: restart apache
+
+  - name: "Creating repository information for rhel synchronized packages"
+    shell: |
+      createrepo -v "{{ YumRepoDir }}"rhel/ -g comps.xml
+    notify: restart apache

@@ -1,0 +1,5 @@
+---
+# tasks file for SymbolicLinks
+  - import_tasks: SymbolicLinks.yml
+    tags:
+      - ISO symbolic link

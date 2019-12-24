@@ -1,0 +1,15 @@
+---
+  - name: Increase lvm size
+    hosts: all
+    become: yes
+    vars_prompt:
+      - name: LvmVgName
+        prompt: "Enter Volume groupo name: "
+        private: no
+
+      - name: LvmPartision
+        prompt: "Enter disk size to increate partition: "
+        private: no
+        default: 4000
+    roles:
+      - Lvm

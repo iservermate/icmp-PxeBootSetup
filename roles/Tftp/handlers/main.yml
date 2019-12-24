@@ -1,0 +1,19 @@
+---
+# handlers file for Tftp
+  - name: Restart xinetd
+    service:
+      name: xinetd
+      state: reloaded
+      enabled: yes
+    listen: "Restart xinetd service"
+
+#  - name: Restart tftp
+#    service:
+#      name: tftp
+#      state: reloaded
+#      enabled: yes
+#    listen: "Restart tftp service"
+
+  - name: restart Firewall
+    service: name=firewalld state=reloaded enbled=yes
+    listen: "Reload firewalld service"

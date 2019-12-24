@@ -1,0 +1,7 @@
+---
+  - name: Create Mount Poinsts
+    hosts: all
+    become: yes
+    gather_facts: off
+    roles:
+      - MountPoints

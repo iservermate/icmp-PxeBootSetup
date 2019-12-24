@@ -1,0 +1,5 @@
+---
+# tasks file for LocalRepos
+  - import_tasks: LocalRepos.yml
+    tags:
+      - sync repos locly

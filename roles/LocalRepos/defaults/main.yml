@@ -1,0 +1,4 @@
+---
+# defaults file for LocalRepos
+YumRepoDir: /var/www/html/repo/
+#PxeServerIP: "{{ inventory_hostname }}"

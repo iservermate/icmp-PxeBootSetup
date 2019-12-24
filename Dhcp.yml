@@ -1,0 +1,67 @@
+---
+  - name: "Install and configure DHCP/DNSMASQ server"
+    hosts: all
+    become: yes
+    gather_facts:  off
+    vars_prompt:
+      - name: DhcpInterfaceName
+        prompt: "Enter DHCP Interface Name: "
+        default: "enp0s3"
+        private: no
+      - name: DomainName
+        prompt: "Enter Domain Name: "
+        default: "iservermate.local"
+        private: no
+      - name: DhcpStartingIP
+        prompt: "Enter DHCP Starting IP: "
+        default: "20.0.0.20"
+        private: no
+      - name: DhcpEndingIP
+        prompt: "Enter DHCP Ending IP: "
+        default: "20.0.0.60"
+        private: no
+      - name: DhcpSubnetMask
+        prompt: "Enter DHCP Subnetmask: "
+        default: "255.255.255.0"
+        private: no
+      - name: LeaseTime
+        prompt: "Enter Time for IP Lease: "
+        default: "24h"
+        private: no
+      - name: DhcpServerIP
+        prompt: "Enter DCHP Server IP: "
+        default: "20.0.0.5"
+        private: no
+      - name: DhcpGateway
+        prompt: "Enter DHCP Gateway IP: "
+        default: "20.0.0.1"
+        private: no
+      - name: DnsServerIP
+        prompt: "Enter DNS Server IP: "
+        default: "20.0.0.2"
+        private: no
+      - name: BroadcastIP
+        prompt: "Enter Broadcast IP: "
+        default: "20.0.0.255"
+        private: no
+      - name: NtpServerIP
+        prompt: "Enter NTP Server IP: "
+        default: "0.0.0.0"
+        private: no
+    tasks:
+      - name: "Provided information is: "
+        debug:
+          msg:
+            - "Dhcp interface name is: {{ DhcpInterfaceName }}"
+            - "Domain name is: {{ DomainName }}"
+            - "Dhcp starting IP is: {{ DhcpStartingIP }}"
+            - "Dhcp ending IP is: {{ DhcpEndingIP }}"
+            - "Dhcp subnetmask is: {{ DhcpSubnetMask }}"
+            - "IP lease tiem is: {{ LeaseTime }}"
+            - "Dhcp server IP is: {{ DhcpServerIP }}"
+            - "Dhcp gateway IP is: {{ DhcpGateway }}"
+            - "Dns server IP is: {{ DnsServerIP }}"
+            - "Provided broadcast IP is: {{ BroadcastIP }}"
+            - "Ntp server IP is: {{ NtpServerIP }}"
+    roles:
+      - Dhcp

@@ -1,0 +1,7 @@
+---
+  - name: "Create Mount Points Symbolic Links under /var/www/html/os Directory"
+    hosts: all
+    become: yes
+    gather_facts: off
+    roles:
+      - SymbolicLinks

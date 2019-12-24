@@ -1,0 +1,7 @@
+---
+  - name: Extend the logical volume to 1024m.
+    lvol:
+      vg: "{{ LvmVgname }}"
+      lv: "{{ LvmPartision }}"
+      size: 5000
+      resizefs: true

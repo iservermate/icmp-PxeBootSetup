@@ -1,0 +1,95 @@
+---
+  - name: "Installing TFTP Packages"
+    yum:
+      name: "{{ item }}"
+      state: present
+      use_backend: yum
+    with_items:
+      - "{{ TftPackages }}"
+  
+  - name: "Modify tftp file."
+    replace:
+      path: /etc/xinetd.d/tftp
+      regexp: 'yes'
+      replace: 'no'
+    notify: "Restart xinetd service"
+
+  - name: "Copying /usr/share/syslinux/* to /var/lib/tftpboot/ directory"
+    shell: cp -Rvf /usr/share/syslinux/* /var/lib/tftpboot/
+    args:
+      creates: /var/lib/tftpboot/pxelinux.cfg/default
+  
+  - name: "Creating pxelinux.cfg directory under tftpboot direcotry"
+    file:
+     path: /var/lib/tftpboot/pxelinux.cfg
+     state: directory
+     mode: 0755
+  
+  - name: "Creating rhel7 directory"
+    file:
+     path: /var/lib/tftpboot/rhel7
+     state: directory
+     mode: 0755
+  
+  - name: "Creating centos7 directory"
+    file:
+     path: /var/lib/tftpboot/centos7
+     state: directory
+     mode: 0755
+  
+  - name: "Creating ubuntu directory"
+    file: 
+     path: /var/lib/tftpboot/ubuntu
+     state: directory
+     mode: 0755 
+  
+  - name: "Copying rhel7/* to /var/lib/tftpboot/rhel7 directory"
+    copy:
+      #src: {{ role_path }}/files/rhel7/
+      src: rhel7/
+      dest: /var/lib/tftpboot/rhel7
+  
+  - name: "Copying centos7/* to /var/lib/tftpboot/centos7 directory"
+    copy:
+      #src: {{ role_path }}/files/centos7/
+      src: centos7/
+      dest: /var/lib/tftpboot/centos7
+  
+  - name: "Copying ubuntu/* to /var/lib/tftpboot/rhel7 directory"
+    copy:
+      src: #{{ role_path }}/files/ubuntu/
+      src: ubuntu/
+      dest: /var/lib/tftpboot/ubuntu
+  
+  - name: "Copy default.j2 template file to remote server"
+    template:
+      src: default.j2
+      dest: /var/lib/tftpboot/pxelinux.cfg/default
+      owner: root
+      group: root
+      mode: 0644
+#    notify: "Restart tftp service"
+#  - name: "Update firewalld"
+#    firewalld:
+#      service: dhcp
+#      permanent: yes
+#      state: enabled
+  
+  - name: "Update firewall dhcp prot: 69/UDP"
+    firewalld:
+      port: 69/udp
+      permanent: yes
+      state: enabled
+  
+  - name: "Update firewall dhcp prot: 69/UDP"
+    firewalld:
+      port: 4011/udp
+      permanent: yes
+      state: enabled
+
+  - name: "Update firewall dhcp prot: 69/UDP"
+    firewalld:
+      service: tftp
+      permanent: yes
+      state: enabled
+    notify: "Reload firewalld service"

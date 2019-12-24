@@ -1,0 +1,5 @@
+---
+# tasks file for Dhcp
+  - import_tasks: Dhcp.yml
+    tags:
+      - configure dhcp

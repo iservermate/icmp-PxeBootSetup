@@ -1,0 +1,5 @@
+---
+# tasks file for YumRepos
+  - import_tasks: YumRepos.yml
+    tags:
+      - centos/rhel repositories

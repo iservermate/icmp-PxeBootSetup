@@ -1,0 +1,5 @@
+---
+# tasks file for MountPoints
+  - import_tasks: MountPoints.yml
+    tags:
+      - mountpoints

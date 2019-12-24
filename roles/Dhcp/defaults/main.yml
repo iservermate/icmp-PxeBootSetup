@@ -1,0 +1,24 @@
+---
+# defaults file for Dhcp
+#Packages to install
+DhcpPackages: 
+  - dnsmasq
+  - tftp-server
+
+####################
+#DHCP CONFIGURATIONS
+####################
+DhcpInterface: interface={{ DhcpInterfaceName }},lo
+DhcpDomain: domain={{ DomainName }}    #domain
+DhcpRange: dhcp-range={{ DhcpInterfaceName }},{{ DhcpStartingIP }},{{ DhcpEndingIP }},{{ DhcpSubnetMask }},{{ LeaseTime }}
+DhcpBoot: dhcp-boot=pxelinux.0,pxeserver,{{ DhcpServerIP }}   #<<<<<<<<<-------- Where is pxe.conf file is
+DhcpOptionGateway: dhcp-option=3,{{ DhcpGateway }}   #gateway
+DhcpOptionDns: dhcp-option=6,{{ DnsServerIP }}    #DNS
+DhcpOptionBroadcast: dhcp-option=28,{{ BroadcastIP }}   #Broadcast ip
+DhcpOptionNtp: dhcp-option=42,{{ NtpServerIP }}      #NTP 
+PxePrompt: pxe-prompt="Press F8 for Menue",60
+PxeService: pxe-service=x86pc, "OS Installation using PXE & Kickstart", pxelinux
+EnableTftp: enable-tftp
+TftpPath: tftp-root=/var/lib/tftpboot
+
+ConfDir: conf-dir=/etc/dnsmasq.d

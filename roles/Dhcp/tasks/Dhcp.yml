@@ -1,0 +1,21 @@
+---
+  - name: "Install requrired packages"
+    yum:
+      name: "{{ DhcpPackages }}"
+      state: present
+      use_backend: auto
+  - debug: msg="{{ DhcpPackages }} installed."
+  - name: "Copy dnsmasq.conf.j2 template file to server"
+    template:
+      src: dnsmasq.conf.j2
+      dest: /etc/dnsmasq.conf
+      owner: root
+      group: root
+      mode: 0644
+    notify: "Restart dnsmasq service"
+  - name: Update firewalld
+    firewalld:
+      service: dns
+      permanent: yes
+      state: enabled
+    notify: "Reload firewalld service"

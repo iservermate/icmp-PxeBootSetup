@@ -1,0 +1,11 @@
+---
+  - name: "Copy yum RHEL/CENTOS and DVD repos files to remot server"
+    hosts: all
+    become: yes
+    gather_facts: on
+    vars_prompt:
+      - name: MyPxeServerIP
+        prompt: "Enter Repo/PXE server IP: "
+        private: no
+    roles:
+      - YumRepos

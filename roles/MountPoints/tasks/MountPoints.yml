@@ -1,0 +1,33 @@
+---
+  - name: "Creating directories for Mount Points"
+    file:
+      path: /mnt/{{ item }}
+      state: directory
+    with_items:
+      - rhel
+      - centos
+      - ubuntu
+
+  - name: "Mounting Rhel"
+    mount:
+      path: /mnt/rhel
+      src: /dev/sr0
+      fstype: iso9660
+      opts: default
+      state: mounted
+
+  - name: "Mounting Centos"
+    mount:
+      path: /mnt/centos
+      src: /dev/sr1
+      fstype: iso9660
+      opts: default
+      state: mounted
+
+  - name: "Mounting Ubuntu"
+    mount:
+      path: /mnt/ubuntu
+      src: /dev/sr2
+      fstype: iso9660
+      opts: default
+      state: mounted

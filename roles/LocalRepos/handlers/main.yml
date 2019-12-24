@@ -1,0 +1,7 @@
+---
+# handlers file for LocalRepos
+  - name: Restart apache
+    service:
+      name: httpd
+      state: restarted
+    listen: restart apache

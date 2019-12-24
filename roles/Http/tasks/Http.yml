@@ -1,0 +1,15 @@
+---
+  - name: Install Apache
+    yum:
+      name: httpd
+      state: latest
+  - name: restart Apache
+    service: name=httpd state=restarted enabled=yes
+  - name: "Updating Firealld"
+    firewalld:
+      zone: public
+      service: http
+      permanent: yes
+      state: enabled
+  - name: restart Firewall
+    service: name=firewalld state=restarted enabled=yes
