@@ -13,7 +13,7 @@
       path: /mnt/rhel
       src: /dev/sr0
       fstype: iso9660
-      opts: default
+      opts: ro,noauto
       state: mounted
 
   - name: "Mounting Centos"
@@ -21,7 +21,8 @@
       path: /mnt/centos
       src: /dev/sr1
       fstype: iso9660
-      opts: default
+      #opts: default
+      opts: ro,noauto
       state: mounted
 
   - name: "Mounting Ubuntu"
@@ -29,5 +30,6 @@
       path: /mnt/ubuntu
       src: /dev/sr2
       fstype: iso9660
-      opts: default
+      #opts: default
+      opts: ro,noauto
       state: mounted

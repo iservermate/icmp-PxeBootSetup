@@ -27,7 +27,6 @@
       owner: root
       group: root
       mode: 0644
-#    when: "'pxeserver' not in inventory_hostname"
     when: ansible_hostname != "pxeserver" and ansible_distribution == "CentOS"
 
   - name: "Copying RHEL template file"
@@ -37,9 +36,7 @@
       owner: root
       group: root
       mode: 0644
-    notify: restart apache
     when:
-#    when: "'pxeserver' not in inventory_hostname"
     when: ansible_hostname != "pxeserver" and ansible_distribution == "RedHat"
 
   - name: "Copying Rhel DVD template file on pxeserver"
@@ -49,7 +46,7 @@
       owner: root
       group: root
       mode: 0644
-    when: "'pxeserver' is in inventory_hostname"
+    when: "'{{ MyPxeServerIP }}' is in inventory_hostname"
 
   - name: "Copying Centos DVD template file on pxeserver"
     template:
@@ -58,17 +55,26 @@
       owner: root
       group: root
       mode: 0644
-    when: "'pxeserver' is in inventory_hostname"
+    when: "'{{ MyPxeServerIP }}' is in inventory_hostname"
 
-  - name: "Copying MyPackages repo template file on server"
-    template:
-      src:  MyPackages.repo.j2
-      dest: /etc/yum.repos.d/MyPackages.repo
-      owner: root
-      group: root
-      mode: 0644
+#  - name: "Copying MyPackages repo template file on server"
+#    template:
+#      src:  MyPackages.repo.j2
+#      dest: /etc/yum.repos.d/MyPackages.repo
+#      owner: root
+#      group: root
+#      mode: 0644
 
   - name: yum-clean-metadata
     command: yum clean metadata
     args:
       warn: no
+
+  - name: "Updting firewall"
+    firewalld:
+      service: http
+      permanent: yes
+      state: enabled
+
+  - name: "Restart firewalld"
+    service: name=firewalld state=restarted enabled=yes

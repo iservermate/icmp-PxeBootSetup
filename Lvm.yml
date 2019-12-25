@@ -3,13 +3,20 @@
     hosts: all
     become: yes
     vars_prompt:
-      - name: LvmVgName
-        prompt: "Enter Volume groupo name: "
+      - name: LvmVgname
+        prompt: "Enter VG/Volume Group name: "
+        default: "vgmatevg"
         private: no
 
       - name: LvmPartision
+        prompt: "Enter LVM name to extend: "
+        #default: "/dev/mapper/vgmatevg-var_lv"
+        default: "var_lv"
+        private: no
+
+      - name: LvmPartisionSize
         prompt: "Enter disk size to increate partition: "
         private: no
-        default: 4000
+        default: "5000"
     roles:
       - Lvm

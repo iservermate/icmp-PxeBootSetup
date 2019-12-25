@@ -15,5 +15,5 @@
 #    listen: "Restart tftp service"
 
   - name: restart Firewall
-    service: name=firewalld state=reloaded enbled=yes
+    service: name=firewalld state=restarted enabled=yes
     listen: "Reload firewalld service"

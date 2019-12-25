@@ -3,5 +3,5 @@
     lvol:
       vg: "{{ LvmVgname }}"
       lv: "{{ LvmPartision }}"
-      size: 5000
+      size: "{{ LvmPartisionSize }}"
       resizefs: true

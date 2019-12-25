@@ -5,7 +5,7 @@
     gather_facts: on
     vars_prompt:
       - name: MyPxeServerIP
-        prompt: "Enter Repo/PXE server IP: "
+        prompt: "Enter Repo/PXE server FQDN: "
         private: no
     roles:
       - YumRepos
