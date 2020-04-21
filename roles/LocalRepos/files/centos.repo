@@ -1,0 +1,6 @@
+[centos]
+name=Centos-7.0
+baseurl=file:///var/www/html/os/centos
+metadata_expire=-1
+gpgcheck=0
+enabled=1

@@ -14,5 +14,5 @@
       state: link
     with_items:
      - { src: '/mnt/rhel' , dest: '/var/www/html/os/rhel' }
-     - { src: '/mnt/centos' , dest: '/var/www/html/os/centos' }
+#     - { src: '/mnt/centos' , dest: '/var/www/html/os/centos' }
      - { src: '/mnt/ubuntu' , dest: '/var/www/html/os/ubuntu' }

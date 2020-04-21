@@ -12,7 +12,7 @@ RootPass: "{{ RootPassword }}"    # Create another role "encrypt pass" and befor
 Timezone: America/Toronto
 
 #Enable OS line as per requirement
-KickUrl: "{{ fqdn }}/os/{{ PxeOS }}"
+KickUrl: "http://{{ fqdn }}/os/{{ PxeOS }}"
 #rhel: "{{ fqdn }}/os/rhel"
 #ubuntu: "{{ fqdn }}/os/ubuntu"
 

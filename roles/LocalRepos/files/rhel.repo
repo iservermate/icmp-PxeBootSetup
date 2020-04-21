@@ -1,0 +1,6 @@
+[rhel]
+name=RHEL-7.0 Server.x86_64
+baseurl=file:///var/www/html/os/rhel
+mediaid=1521745267.626363
+enabled=1
+gpgcheck=0

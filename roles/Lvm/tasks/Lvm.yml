@@ -5,3 +5,4 @@
       lv: "{{ LvmPartision }}"
       size: "{{ LvmPartisionSize }}"
       resizefs: true
+      shrink: yes
